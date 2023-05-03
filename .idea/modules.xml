@@ -8,7 +8,6 @@
       <module fileurl="file://$PROJECT_DIR$/pfe.iml" filepath="$PROJECT_DIR$/pfe.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-registry/service-registry.iml" filepath="$PROJECT_DIR$/service-registry/service-registry.iml" />
       <module fileurl="file://$PROJECT_DIR$/team-service/team-service.iml" filepath="$PROJECT_DIR$/team-service/team-service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/user-service/user-service.iml" filepath="$PROJECT_DIR$/user-service/user-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/user-service1/user-service (1) (com.example).iml" filepath="$PROJECT_DIR$/user-service1/user-service (1) (com.example).iml" />
     </modules>
   </component>

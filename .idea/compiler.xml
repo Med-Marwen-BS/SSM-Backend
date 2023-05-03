@@ -10,7 +10,6 @@
         <module name="Mail-App" />
         <module name="config-server" />
         <module name="api-gateway" />
-        <module name="user-service" />
         <module name="team-service" />
         <module name="user-service (1) (com.example)" />
         <module name="service-registry" />
