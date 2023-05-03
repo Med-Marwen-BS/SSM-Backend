@@ -1,0 +1,32 @@
+eureka:
+  instance:
+    client:
+      serverUrl:
+        defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name : MAIL-SERVICE
+  mail:
+    username: sproject.technical
+    port: '587'
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: 'true'
+            required: 'true'
+          auth: 'true'
+        debug: 'true'
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    test-connection: 'false'
+    password: ybwxayuw--euqvswcn
+  thymeleaf:
+    cache: 'false'
+    suffix: .html
+
+server:
+  port: '3008'
+
+
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Mail-App" />
+        <module name="config-server" />
+        <module name="api-gateway" />
+        <module name="user-service" />
+        <module name="team-service" />
+        <module name="user-service (1) (com.example)" />
+        <module name="service-registry" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="api-gateway" target="17" />
+      <module name="config-server" target="17" />
+      <module name="Mail-App" target="11" />
+      <module name="service-registry" target="17" />
+      <module name="team-service" target="17" />
+      <module name="user-service" target="17" />
+      <module name="user-service (1) (com.example)" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Mail-App" options="-parameters" />
+      <module name="api-gateway" options="-parameters" />
+      <module name="config-server" options="-parameters" />
+      <module name="service-registry" options="-parameters" />
+      <module name="team-service" options="-parameters" />
+      <module name="user-service" options="-parameters" />
+      <module name="user-service (1) (com.example)" options="-parameters" />
+    </option>
+  </component>
+</project>
