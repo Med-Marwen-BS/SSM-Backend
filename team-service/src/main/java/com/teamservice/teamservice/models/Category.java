@@ -3,6 +3,7 @@ package com.teamservice.teamservice.models;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 
 @Document(value = "Category")
@@ -14,7 +15,7 @@ public class Category {
     @Id
     private String id ;
     private String name ;
-
+    @DocumentReference
     private Team team ;
 
 //    private List<User> backroom_staff ;

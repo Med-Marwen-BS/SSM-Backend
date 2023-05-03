@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 public class Match {
     @Id
     private String id ;
+    @DocumentReference
     private List<PlayerStats> playerStats ;
     private LocalDate date ;
     private String opponent ;

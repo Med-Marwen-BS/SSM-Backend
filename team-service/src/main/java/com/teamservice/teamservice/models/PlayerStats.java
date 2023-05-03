@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.time.LocalDate;
 
@@ -18,7 +19,9 @@ import java.time.LocalDate;
 public class PlayerStats {
     @Id
     private String id ;
+    @DocumentReference(lazy = true)
     private Player player ;
+    @DocumentReference(lazy = true)
     private Stats stats ;
 //    private LocalDate date ;
 //    private String opponent ;

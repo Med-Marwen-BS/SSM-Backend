@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,7 +25,7 @@ public class Player {
     private String phone_number;
     private String height ;
     private String width ;
-
+    @DocumentReference
     private List<Stats> stats ;
     private Category category ;
 
