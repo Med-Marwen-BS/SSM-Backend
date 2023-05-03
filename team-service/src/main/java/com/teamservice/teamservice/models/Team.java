@@ -1,5 +1,6 @@
 package com.teamservice.teamservice.models;
 
+import com.teamservice.teamservice.utility.Helper;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -34,6 +35,6 @@ public class Team {
         if(!team.getCountry().isEmpty()&&!team.getCountry().isBlank()) this.setCountry(team.getCountry());
     }
     public boolean checkRequiredFields(){
-        return !this.getName().isEmpty() && !this.getName().isBlank() ;
+        return Helper.isNotEmptyString(name)&&Helper.isNotEmptyString(country);
     }
 }

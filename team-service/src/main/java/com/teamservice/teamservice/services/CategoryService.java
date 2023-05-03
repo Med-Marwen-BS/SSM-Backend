@@ -14,7 +14,6 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class CategoryService {
     private CategoryRepository categoryRepository;
 

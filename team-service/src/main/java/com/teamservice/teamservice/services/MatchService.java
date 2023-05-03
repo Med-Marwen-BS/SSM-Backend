@@ -11,7 +11,6 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class MatchService {
     private MatchRepository matchRepository;
 

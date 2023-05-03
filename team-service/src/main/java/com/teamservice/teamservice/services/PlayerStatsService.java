@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class PlayerStatsService {
     private PlayerStatsRepository playerStatsRepository;
 
