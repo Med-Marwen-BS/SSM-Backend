@@ -3,16 +3,17 @@ package com.teamservice.teamservice.controller;
 import com.teamservice.teamservice.models.Team;
 import com.teamservice.teamservice.services.TeamService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RefreshScope
+@CrossOrigin("*")
 @RestController
-@AllArgsConstructor
 @RequestMapping("/api/team-service/team")
 public class TeamController {
+    @Autowired
     private TeamService teamService ;
 
     @PostMapping("/save")
