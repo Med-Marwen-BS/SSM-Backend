@@ -10,3 +10,7 @@ spring.cloud.gateway.routes[0].predicates[0]=Path=/api/team-service/**
 spring.cloud.gateway.routes[1].id=USER-SERVICE
 spring.cloud.gateway.routes[1].uri.=lb://USER-SERVICE
 spring.cloud.gateway.routes[1].predicates[0]=Path=/api/user-service/**
+
+spring.cloud.gateway.globalcors.corsConfigurations.[/**].allowedOrigins=*
+spring.cloud.gateway.globalcors.corsConfigurations.[/**].allowedMethods=GET,POST,PUT,OPTIONS
+spring.cloud.gateway.globalcors.corsConfigurations.[/**].allowCredentials=true
