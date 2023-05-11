@@ -29,23 +29,19 @@ public class gatewayConfig  {
 
 
 
-//    @Bean
-//    public WebFilter corsFilter() {
-//        return (ServerWebExchange exchange, WebFilterChain chain) -> {
-//            ServerHttpRequest request = exchange.getRequest();
-//            ServerHttpResponse response = exchange.getResponse();
-//            HttpHeaders headers = response.getHeaders();
-//            headers.add("Access-Control-Allow-Origin", "http://localhost:4200");
-//            headers.add("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, OPTIONS");
-//            headers.add("Access-Control-Allow-Headers", "origin, content-type, accept, x-requested-with, authorization");
-//            headers.add("Access-Control-Max-Age", "3600");
-//            if (request.getMethod() == HttpMethod.OPTIONS) {
-//                response.setStatusCode(HttpStatus.OK);
-//                return Mono.empty();
-//            }
-//            return chain.filter(exchange);
-//        };
-//    }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+        corsConfig.setAllowedMethods(Arrays.asList(HttpMethod.GET.name(), HttpMethod.PUT.name(), HttpMethod.POST.name(), HttpMethod.DELETE.name()));
+        corsConfig.addAllowedHeader("*");
+        corsConfig.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig);
+
+        return source;
+    }
 
 }
 
