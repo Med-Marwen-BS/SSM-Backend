@@ -12,4 +12,6 @@ import lombok.NoArgsConstructor;
 public class AuthResponse extends MainResponse {
 
     private String token;
+    private String errorMessage;
+
 }
