@@ -2,9 +2,8 @@ package com.example.userservice.Enum;
 
 public enum Role {
 
-    UTILISATEUR("UTILISATEUR"),
-
-    ADMIN_REGION("ADMIN-REGION"),
+    USER("USER"),
+    SUPER_ADMIN("SUPER_ADMIN"),
     ADMIN("ADMIN");
 
 

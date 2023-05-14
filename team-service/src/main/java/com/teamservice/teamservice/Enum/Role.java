@@ -2,7 +2,11 @@ package com.teamservice.teamservice.Enum;
 
 public enum Role {
 
-    USER,
-    SUPER_ADMIN,
-    ADMIN;
+    USER("USER"),
+    SUPER_ADMIN("SUPER_ADMIN"),
+    ADMIN("ADMIN");
+
+
+    Role(String value) {
+    }
 }
