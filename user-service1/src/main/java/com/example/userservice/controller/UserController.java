@@ -46,6 +46,17 @@ public class UserController {
             exception.printStackTrace();
             return new ErrorResponse(exception.getMessage());
         }
+    }    @GetMapping("/getByToken")
+    public MainResponse getByToken(@RequestHeader("Authorization") String bearerToken){
+        try{
+            bearerToken=bearerToken.replace("Bearer ","");
+            User user = userService.getUserByToken(bearerToken);
+            return new CommonResponse<>(user,HttpStatus.OK.toString());
+        }
+        catch (RuntimeException exception){
+            exception.printStackTrace();
+            return new ErrorResponse(exception.getMessage());
+        }
     }
     @DeleteMapping("/delete/{id}")
     public MainResponse delete(@PathVariable String id){

@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,6 +36,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final MailService mailService;
+    private final JWTService jwtService;
 
     private final MongoTemplate mongoTemplate;
 
@@ -103,6 +105,10 @@ public class UserService {
         return userRepo.existsByUsername(username);
     }
 
+    public User getUserByToken(String token){
+        String username = jwtService.extractUsername(token);
+        return this.getByUsername(username);
+    }
     public User getByUsername(String username){
         return userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User does not exist on the database"));
     }

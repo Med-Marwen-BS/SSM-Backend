@@ -1,10 +1,9 @@
 package com.teamservice.teamservice.controller;
 
 import com.teamservice.teamservice.models.Team;
+import com.teamservice.teamservice.models.request.TeamDTO;
 import com.teamservice.teamservice.services.TeamService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +16,8 @@ public class TeamController {
     private TeamService teamService ;
 
     @PostMapping("/save")
-    public Team save(@RequestBody Team team) {
-        return teamService.addTeam(team);
+    public Team save(@RequestBody TeamDTO team) {
+            return teamService.addTeam(team);
     }
     @PutMapping("/update")
     public Team update(@RequestBody Team team) {
