@@ -24,7 +24,7 @@ public class MatchService {
         if(optionalMatch.isPresent()){
             Match toUpdate = optionalMatch.get() ;
             toUpdate.updateCategory(match);
-            return toUpdate;
+            return matchRepository.save(toUpdate) ;
         }
 
         return null ;

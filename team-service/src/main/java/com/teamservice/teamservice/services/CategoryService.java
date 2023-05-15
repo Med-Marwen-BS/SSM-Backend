@@ -27,7 +27,7 @@ public class CategoryService {
         if(optionalTeam.isPresent()){
             Category toUpdate = optionalTeam.get() ;
             toUpdate.updateCategory(category);
-            return toUpdate;
+            return categoryRepository.save(category) ;
         }
 
         return null ;

@@ -24,7 +24,7 @@ public class StatsService {
         if(optionalTeam.isPresent()){
             Stats toUpdate = optionalTeam.get() ;
             toUpdate.updateCategory(stats);
-            return toUpdate;
+            return statsRepository.save(toUpdate) ;
         }
 
         return null ;

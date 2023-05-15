@@ -25,7 +25,7 @@ public class PlayerService {
         if(optionalTeam.isPresent()){
             Player toUpdate = optionalTeam.get() ;
             toUpdate.updateCategory(player);
-            return toUpdate;
+            return playerRepository.save(toUpdate) ;
         }
 
         return null ;
