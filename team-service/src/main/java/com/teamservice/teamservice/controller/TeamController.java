@@ -15,9 +15,9 @@ public class TeamController {
     @Autowired
     private TeamService teamService ;
 
-    @PostMapping("/save")
-    public Team save(@RequestBody TeamDTO team) {
-            return teamService.addTeam(team);
+    @PostMapping("/save/{username}")
+    public Team save(@RequestBody TeamDTO team,@PathVariable("username") String username) {
+            return teamService.addTeam(team,username);
     }
     @PutMapping("/update")
     public Team update(@RequestBody Team team) {

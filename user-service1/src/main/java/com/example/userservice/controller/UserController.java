@@ -3,10 +3,12 @@ package com.example.userservice.controller;
 import com.example.userservice.Entity.Notification;
 import com.example.userservice.Entity.Param.CsvResult;
 import com.example.userservice.Entity.Param.MailBodyParam;
+import com.example.userservice.Entity.Param.TeamToUserBody;
 import com.example.userservice.Entity.User;
 import com.example.userservice.Response.CommonResponse;
 import com.example.userservice.Response.ErrorResponse;
 import com.example.userservice.Response.MainResponse;
+import com.example.userservice.Service.JWTService;
 import com.example.userservice.Service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,11 +21,22 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserController {
 
     private final UserService userService;
+    private final JWTService jwtService;
 
     @GetMapping("/get/{id}")
     public MainResponse getById(@PathVariable String id){
         try{
             return new CommonResponse<>(userService.getById(id), HttpStatus.OK.toString());
+        }
+        catch (RuntimeException exception){
+            return new ErrorResponse(exception.getMessage());
+        }
+
+    }
+    @GetMapping("/isTokenExpired")
+    public MainResponse isTokenExpired(@RequestHeader("Authorization") String bearerToken){
+        try{
+            return new CommonResponse<>(jwtService.isTokenExpired(bearerToken), HttpStatus.OK.toString());
         }
         catch (RuntimeException exception){
             return new ErrorResponse(exception.getMessage());
@@ -101,6 +114,21 @@ public class UserController {
     public MainResponse updateNotification(@RequestBody Notification notification){
         userService.updateNotification(notification);
         return new CommonResponse<>(true,HttpStatus.OK.toString());
+    }
+
+    @PostMapping("/addTeamToUser")
+    public MainResponse addTeamToUser(@RequestBody TeamToUserBody teamToUserBody){
+        return new CommonResponse<>(userService.addTeamToUser(teamToUserBody.getTeamId(),teamToUserBody.getEmail()),HttpStatus.OK.toString());
+    }
+
+    @GetMapping("/leaveTeam")
+    public MainResponse leaveTeam(@RequestHeader("Authorization") String bearerToken){
+        try {
+            bearerToken=bearerToken.replace("Bearer ","");
+            return new CommonResponse<>(userService.leaveTeam(bearerToken),HttpStatus.OK.toString());
+        }catch (Exception e){
+            return new CommonResponse<>("failed",HttpStatus.BAD_REQUEST.toString());
+        }
     }
 
     @PutMapping("/readNotification/{id}")

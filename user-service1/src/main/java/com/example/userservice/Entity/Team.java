@@ -17,22 +17,29 @@ import java.util.List;
 @Builder
 public class Team {
     @Id
-    private String id ;
-    private String name ;
+    private String id;
+    private String name;
     private String country;
-    @DocumentReference(lazy = true) private List<User> users;
+
+    private String creatorId;
+//    @DocumentReference(lazy = true)
+    //private User creator;
+//    @DocumentReference(lazy = true) private List<User> users;
 
 //    @DBRef
 //    private List<Category> categories ;
 
-    public boolean uniqueNameAndCountry(){
+    public boolean uniqueNameAndCountry() {
         return true;
     }
-    public void updateTeam(Team team){
-        if(!team.getName().isEmpty()&&!team.getName().isBlank()) this.setName(team.getName());
-        if(!team.getCountry().isEmpty()&&!team.getCountry().isBlank()) this.setCountry(team.getCountry());
+
+    public void updateTeam(Team team) {
+        if (!team.getName().isEmpty() && !team.getName().isBlank()) this.setName(team.getName());
+        if (!team.getCreatorId().isEmpty() && !team.getCreatorId().isBlank()) this.setCreatorId(team.getCreatorId());
+        if (!team.getCountry().isEmpty() && !team.getCountry().isBlank()) this.setCountry(team.getCountry());
     }
-    public boolean checkRequiredFields(){
-        return !this.getName().isEmpty() && !this.getName().isBlank() ;
-    }
+
+//    public boolean checkRequiredFields() {
+//        return Helper.isNotEmptyString(name) && Helper.isNotEmptyString(country) && Helper.isNotEmptyString(creatorId);
+//    }
 }

@@ -18,9 +18,8 @@ public class TeamService {
     private final TeamRepository teamRepository;
     private final UserRepo userRepo;
 
-    public Team addTeam(TeamDTO team){
+    public Team addTeam(TeamDTO team,String username){
         try {
-            //System.out.println(team.getCreator());
             Team toSave=Team.builder().name(team.getName()).country(team.getCountry()).build();
             if(userRepo.findById(team.getCreatorId()).isPresent()){
                 toSave.setCreatorId(team.getCreatorId());
@@ -28,9 +27,21 @@ public class TeamService {
                 throw new RuntimeException("user not found");
             }
             if(!toSave.checkRequiredFields()) throw new RuntimeException("check required fields failed");
-            if(teamRepository.findByNameAndCountry(toSave.getName(),toSave.getCountry()).isPresent()) throw new RuntimeException("name and country already exist");
+            Optional<List<Team> > teamList = teamRepository.findByNameAndCountry(toSave.getName(),toSave.getCountry());
+            if(teamList.isPresent()){
+                if(teamList.get().size()>0)
+                    throw new RuntimeException("name and country already exist");
+            }
             //toSave.setCreator(user);
+            Optional<User> userOptional = userRepo.findByUsername(username);
+            if(userOptional.isEmpty()) throw new RuntimeException("user not found");
+
+            User user = userOptional.get();
+            //if(user.getTeam()!=null) throw new RuntimeException("already have a team");
+            if(user.getTeam().getId()!=null) throw new RuntimeException("already have a team");
             Team response = teamRepository.save(toSave);
+            user.setTeam(response);
+            userRepo.save(user);
             return response ;
         }catch (Exception e){
             e.printStackTrace();
@@ -42,8 +53,12 @@ public class TeamService {
         //TODO: Test
         Optional<Team> optionalTeam = teamRepository.findById(team.getId());
         if(optionalTeam.isPresent()){
-            if(teamRepository.findByNameAndCountryAndIdNot(team.getName(),team.getCountry(),team.getId()).isPresent())
-                throw new RuntimeException("name and country already exist");
+            Optional<List<Team> > teamList = teamRepository.findByNameAndCountry(team.getName(),team.getCountry());
+            if(teamList.isPresent()){
+                ;
+                if(!teamList.get().stream().allMatch(t->t.getId().equals(team.getId())))
+                    throw new RuntimeException("name and country already exist");
+            }
 
             Team toUpdate = optionalTeam.get() ;
             toUpdate.updateTeam(team);
@@ -63,5 +78,6 @@ public class TeamService {
         if(team.isEmpty()) throw new RuntimeException("team not found");
         return team.get() ;
     }
+
 
 }

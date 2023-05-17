@@ -37,8 +37,8 @@ public class User implements UserDetails {
     private String password;
 
     private Role role;
-//    @DocumentReference(lazy = true)
-//    private Team team ;
+    @DocumentReference(lazy = true)
+    private Team team ;
 
     private Boolean enabled = true;
 

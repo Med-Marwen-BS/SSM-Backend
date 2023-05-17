@@ -1,5 +1,6 @@
 package com.example.userservice.Service;
 
+import com.example.userservice.Entity.Team;
 import com.example.userservice.Enum.CsvStatus;
 import com.example.userservice.Entity.Notification;
 import com.example.userservice.Entity.Param.CsvConversionResult;
@@ -7,6 +8,7 @@ import com.example.userservice.Entity.Param.CsvResult;
 import com.example.userservice.Entity.Param.MailBodyParam;
 import com.example.userservice.Entity.Param.MailParam;
 import com.example.userservice.Entity.User;
+import com.example.userservice.Repo.TeamRepository;
 import com.example.userservice.Repo.UserRepo;
 import com.example.userservice.Utility.CsvHelper;
 import com.example.userservice.Utility.Extractor;
@@ -26,12 +28,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepo userRepo;
+    private final TeamRepository teamRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -52,6 +56,27 @@ public class UserService {
     public String delete(String id){
         userRepo.deleteById(id);
         return "User Deleted";
+    }
+
+    public String addTeamToUser(String teamId  ,String emailUser){
+        try {
+            Optional<Team> optionalTeam = teamRepository.findById(teamId);
+            Optional<User> optionalUser = userRepo.findByEmail(emailUser);
+
+            if(optionalTeam.isEmpty() || optionalUser.isEmpty())
+                throw new RuntimeException("team or user not found");
+
+            User user=optionalUser.get();
+            if(user.getTeam()!=null) throw new RuntimeException("user have team");
+            user.setTeam(optionalTeam.get());
+            userRepo.save(user);
+            return "success";
+        }catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        }
+
+
     }
 
     public User update(String id,User user){
@@ -109,6 +134,25 @@ public class UserService {
         String username = jwtService.extractUsername(token);
         return this.getByUsername(username);
     }
+    public String leaveTeam(String token){
+        try {
+            this.getUserByToken(token);
+
+
+            User user=this.getUserByToken(token);
+            if(user.getTeam().getCreatorId().equals(user.getId()))
+                throw new RuntimeException("creator cannot leave the team");
+            user.setTeam(null);
+            userRepo.save(user);
+            return "success";
+        }catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        }
+
+
+    }
+
     public User getByUsername(String username){
         return userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User does not exist on the database"));
     }
