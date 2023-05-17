@@ -15,7 +15,7 @@ public class MatchService {
     private MatchRepository matchRepository;
 
     public Match addMatch(Match match){
-        if(match.checkRequiredFields()) throw new RuntimeException("check required fields failed");
+        if(!match.checkRequiredFields()) throw new RuntimeException("check required fields failed");
         return matchRepository.save(match) ;
     }
     public Match updatePlayer(Match match)

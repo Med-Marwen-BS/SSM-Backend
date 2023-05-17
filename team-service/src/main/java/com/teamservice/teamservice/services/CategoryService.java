@@ -16,9 +16,19 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CategoryService {
     private CategoryRepository categoryRepository;
+    private final TeamRepository teamRepository;
 
     public Category addCategory(Category category){
-        if(category.checkRequiredFields()) throw new RuntimeException("check required fields failed");
+        Optional<List<Category>> optionalCategory = categoryRepository.findByNameIgnoreCaseAndTeamId(category.getName(),category.getTeam());
+        Optional<Team> team = teamRepository.findById(category.getTeam().getId());
+        List<Category> c;
+        if(optionalCategory.isPresent()){
+            c = optionalCategory.get() ;
+        }else throw new RuntimeException("categorie exist with this name");
+
+        if(c.size()!=0) throw new RuntimeException("categorie exist with this name");
+        if(team.isEmpty())throw new RuntimeException("the team is required");
+        if(!category.checkRequiredFields()) throw new RuntimeException("check required fields failed");
         return categoryRepository.save(category) ;
     }
     public Category updateCategory(Category category)

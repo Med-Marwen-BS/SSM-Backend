@@ -19,7 +19,8 @@ import java.util.List;
 public class Player {
     @Id
     private String id ;
-    private String name ;
+    private String firstName ;
+    private String lastName ;
     private String email ;
     private LocalDate birthdate ;
     private String phone_number;
@@ -27,16 +28,20 @@ public class Player {
     private String width ;
     @DocumentReference
     private List<Stats> stats ;
+    @DocumentReference
     private Category category ;
 
     public boolean checkRequiredFields(){
-        return !this.getName().isEmpty() && !this.getName().isBlank() && this.category!=null
+        return !this.getFirstName().isEmpty() && !this.getFirstName().isBlank()
+                && !this.getLastName().isEmpty() && !this.getLastName().isBlank()
+                && this.category!=null
                 && !this.getEmail().isEmpty() && !this.getEmail().isBlank()
                 && this.getBirthdate()!=null
                 ;
     }
     public void updateCategory(Player player){
-        if(!player.getName().isEmpty()&&!player.getName().isBlank()) this.setName(player.getName());
+        if(!player.getFirstName().isEmpty()&&!player.getFirstName().isBlank()) this.setFirstName(player.getFirstName());
+        if(!player.getLastName().isEmpty()&&!player.getLastName().isBlank()) this.setLastName(player.getLastName());
         if(!player.getEmail().isEmpty()&&!player.getEmail().isBlank()) this.setEmail(player.getEmail());
         if(!player.getPhone_number().isEmpty()&&!player.getPhone_number().isBlank()) this.setPhone_number(player.getPhone_number());
         if(!player.getHeight().isEmpty()&&!player.getHeight().isBlank()) this.setHeight(player.getHeight());

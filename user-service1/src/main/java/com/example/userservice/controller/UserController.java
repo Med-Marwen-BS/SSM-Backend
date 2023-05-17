@@ -59,7 +59,8 @@ public class UserController {
             exception.printStackTrace();
             return new ErrorResponse(exception.getMessage());
         }
-    }    @GetMapping("/getByToken")
+    }
+    @GetMapping("/getByToken")
     public MainResponse getByToken(@RequestHeader("Authorization") String bearerToken){
         try{
             bearerToken=bearerToken.replace("Bearer ","");

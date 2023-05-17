@@ -1,7 +1,9 @@
 package com.teamservice.teamservice.services;
 
+import com.teamservice.teamservice.models.Category;
 import com.teamservice.teamservice.models.Player;
 import com.teamservice.teamservice.models.Team;
+import com.teamservice.teamservice.repositories.CategoryRepository;
 import com.teamservice.teamservice.repositories.PlayerRepository;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +16,13 @@ import java.util.Optional;
 @AllArgsConstructor
 public class PlayerService {
     private PlayerRepository playerRepository;
+    private CategoryRepository categoryRepository;
 
     public Player addPlayer(Player player){
-        if(player.checkRequiredFields()) throw new RuntimeException("check required fields failed");
+        if(!player.checkRequiredFields()) throw new RuntimeException("check required fields failed");
+        Optional<Category> category = categoryRepository.findById(player.getCategory().getId());
+        if(category.isEmpty()) throw new RuntimeException("category not found");
+
         return playerRepository.save(player) ;
     }
     public Player updatePlayer(Player player)

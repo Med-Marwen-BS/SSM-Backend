@@ -15,7 +15,7 @@ public class StatsService {
     private StatsRepository statsRepository;
 
     public Stats addPlayerStats(Stats stats){
-        if(stats.checkRequiredFields()) throw new RuntimeException("check required fields failed");
+        if(!stats.checkRequiredFields()) throw new RuntimeException("check required fields failed");
         return statsRepository.save(stats) ;
     }
     public Stats updatePlayer(Stats stats)
