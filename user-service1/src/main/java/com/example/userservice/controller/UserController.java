@@ -36,6 +36,7 @@ public class UserController {
     @GetMapping("/isTokenExpired")
     public MainResponse isTokenExpired(@RequestHeader("Authorization") String bearerToken){
         try{
+            bearerToken=bearerToken.replace("Bearer ","");
             return new CommonResponse<>(jwtService.isTokenExpired(bearerToken), HttpStatus.OK.toString());
         }
         catch (RuntimeException exception){
