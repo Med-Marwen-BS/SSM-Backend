@@ -43,8 +43,8 @@ public class CategoryService {
         return null ;
 
     }
-    public List<Category> getAllCategories(){
-        return categoryRepository.findAll() ;
+    public List<Category> getAllCategories(String teamId){
+        return categoryRepository.findByTeamId(teamId) ;
     }
 
     public Category findById(String  id){

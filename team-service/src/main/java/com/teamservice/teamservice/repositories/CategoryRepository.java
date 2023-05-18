@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface CategoryRepository extends MongoRepository<Category ,String> {
     Optional<List<Category>> findByNameIgnoreCaseAndTeamId(String name, Team team);
+    List<Category> findByTeamId(String teamId);
 }

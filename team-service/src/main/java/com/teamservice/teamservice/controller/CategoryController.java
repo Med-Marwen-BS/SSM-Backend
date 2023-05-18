@@ -24,9 +24,9 @@ public class CategoryController {
         return categoryService.updateCategory(category);
     }
 
-    @GetMapping("/getAll")
-    public List<Category> getCategories() {
-        return categoryService.getAllCategories();
+    @GetMapping("/getAll/{teamId}")
+    public List<Category> getCategories(@PathVariable("teamId")String teamId) {
+        return categoryService.getAllCategories(teamId);
     }
     @GetMapping("/get/{id}")
     public Category getCategoryById(@PathVariable("id") String id) {

@@ -24,9 +24,9 @@ public class PlayerController {
         return playerService.updatePlayer(player);
     }
 
-    @GetMapping("/getAll")
-    public List<Player> getTeams() {
-        return playerService.getAllPlayers();
+    @GetMapping("/getAll/{categoryId}")
+    public List<Player> getTeams(@PathVariable("categoryId") String categoryId) {
+        return playerService.getAllPlayers(categoryId);
     }
     @GetMapping("/get/{id}")
     public Player getPlayerById(@PathVariable("id") String id) {

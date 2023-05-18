@@ -37,8 +37,8 @@ public class PlayerService {
         return null ;
 
     }
-    public List<Player> getAllPlayers(){
-        return playerRepository.findAll() ;
+    public List<Player> getAllPlayers(String categoyId){
+        return playerRepository.findByCategoryId(categoyId) ;
     }
 
     public Player findById(String  id){
