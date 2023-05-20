@@ -22,6 +22,8 @@ public class Stats {
     private Integer goals ;
     private Integer saves ;
 
+
+
     public boolean checkRequiredFields(){
         //TODO:
 //        return this.getShots() && this.category!=null

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RefreshScope
@@ -16,8 +17,8 @@ public class MatchController {
     private MatchService matchService;
 
     @PostMapping("/save")
-    public Match save(@RequestBody Match stats) {
-        return matchService.addMatch(stats);
+    public Match save(@RequestHeader("Authorization") String token,@RequestBody Match stats) {
+        return matchService.addMatch(stats,token);
     }
     @PutMapping("/update")
     public Match update(@RequestBody Match stats) {
@@ -25,12 +26,17 @@ public class MatchController {
     }
 
     @GetMapping("/getAll")
-    public List<Match> getTeams() {
+    public List<Match> getMatchs() {
         return matchService.getAll();
     }
     @GetMapping("/get/{id}")
-    public Match getPlayerById(@PathVariable("id") String id) {
+    public Match getMatchById(@PathVariable("id") String id) {
         return matchService.findById(id);
+    }
+
+    @GetMapping("/getByDate/{teamId}/{date}")
+    public List<Match> getMatchById(@PathVariable("teamId") String teamId,@PathVariable("date") LocalDate date) {
+        return matchService.findByDate(date,teamId);
     }
 
 }

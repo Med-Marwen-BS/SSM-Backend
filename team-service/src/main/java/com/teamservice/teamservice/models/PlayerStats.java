@@ -13,7 +13,6 @@ import java.time.LocalDate;
 
 @Document(value = "PlayerStats")
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
 @Builder
 public class PlayerStats {
@@ -21,20 +20,30 @@ public class PlayerStats {
     private String id ;
     @DocumentReference(lazy = true)
     private Player player ;
-    @DocumentReference(lazy = true)
-    private Stats stats ;
+    private Integer shots ;
+    private Integer goals ;
+    private Integer saves ;
+    private Integer minutes ;
+    @DocumentReference
+    private Match match ;
 //    private LocalDate date ;
 //    private String opponent ;
 
 
+    public PlayerStats(Match match,Player player){
+        this.match=match;
+        this.player=player;
+        shots=0;
+        goals=0;
+        saves=0;
+        minutes=0;
+    }
     public boolean checkRequiredFields(){
         return  this.getPlayer()!=null
-                && this.getStats()!=null
                 ;
     }
     public void updateCategory(PlayerStats playerStats){
         if(playerStats.getPlayer() != null) this.setPlayer(playerStats.getPlayer());
-        if(playerStats.getStats() != null) this.setStats(playerStats.getStats());
         //if(playerStats.getDate() != null) this.setDate(playerStats.getDate());
         //if(Helper.isNotEmptyString(this.getOpponent())) this.setOpponent(playerStats.getOpponent());
     }
