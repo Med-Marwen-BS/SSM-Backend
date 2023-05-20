@@ -1,6 +1,7 @@
 package com.teamservice.teamservice.services;
 
 import com.teamservice.teamservice.models.*;
+import com.teamservice.teamservice.models.request.MatchRequest;
 import com.teamservice.teamservice.models.request.UserResponse;
 import com.teamservice.teamservice.models.request.getTokenResponse;
 import com.teamservice.teamservice.repositories.MatchRepository;
@@ -23,7 +24,9 @@ public class MatchService {
     private PlayerStatsRepository playerStatsRepository;
     private PlayerRepository playerRepository;
 
-    public Match addMatch(Match match,String token){
+    public Match addMatch(MatchRequest matchRequest, String token){
+
+        Match match = matchRequest.getMatch();
         getTokenResponse userResponse = apiClients.getByToken(token);
         match.setCreator(userResponse.getData().getId());
 
@@ -32,7 +35,8 @@ public class MatchService {
 
         Match newMatch = matchRepository.save(match) ;
         List<PlayerStats> playerStats = new ArrayList<>();
-        List<Player> players = playerRepository.findByCategoryId(match.getCategory().getId());
+        //List<Player> players1 = playerRepository.findByCategoryId(match.getCategory().getId());
+        List<Player> players = playerRepository.findAllById(matchRequest.getPlayersIds());
         players.forEach(player -> {
             playerStats.add(new PlayerStats(newMatch,player));
         });
@@ -63,7 +67,7 @@ public class MatchService {
     }
 
     public List<Match> findByDate(LocalDate date, String teamId){
-        List<Match> match = matchRepository.findByDateEqualsAndTeamId(date,teamId);
+        List<Match> match = matchRepository.findByDateAndTeamId(date,teamId);
 
         if(match == null) throw new RuntimeException("match not found");
         return match ;

@@ -1,6 +1,7 @@
 package com.teamservice.teamservice.controller;
 
 import com.teamservice.teamservice.models.Match;
+import com.teamservice.teamservice.models.request.MatchRequest;
 import com.teamservice.teamservice.services.MatchService;
 import lombok.AllArgsConstructor;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -17,12 +18,12 @@ public class MatchController {
     private MatchService matchService;
 
     @PostMapping("/save")
-    public Match save(@RequestHeader("Authorization") String token,@RequestBody Match stats) {
-        return matchService.addMatch(stats,token);
+    public Match save(@RequestHeader("Authorization") String token,@RequestBody MatchRequest matchRequest) {
+        return matchService.addMatch(matchRequest,token);
     }
     @PutMapping("/update")
-    public Match update(@RequestBody Match stats) {
-        return matchService.updatePlayer(stats);
+    public Match update(@RequestBody Match match) {
+        return matchService.updatePlayer(match);
     }
 
     @GetMapping("/getAll")

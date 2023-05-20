@@ -35,11 +35,11 @@ public class PlayerStatsService {
         return playerStatsRepository.findAll() ;
     }
 
-    public PlayerStats findById(String  id){
-        Optional<PlayerStats> player = playerStatsRepository.findById(id);
+    public List<PlayerStats> findByMatchId(String  matchId){
+        List<PlayerStats> players = playerStatsRepository.findByMatchId(matchId);
 
-        if(player.isEmpty()) throw new RuntimeException("player not found");
-        return player.get() ;
+        if(players.isEmpty()) throw new RuntimeException("players not found");
+        return players ;
     }
 
 }

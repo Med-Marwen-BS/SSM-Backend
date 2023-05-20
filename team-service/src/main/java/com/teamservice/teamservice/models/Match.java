@@ -33,10 +33,16 @@ public class Match {
     private Status status ;
     private String opponent ;
 
+    private int opponentScore;
+    private int myScore;
+
+
 
     public Match(){
         date=LocalDate.now();
         status=Status.NotStarted;
+        opponentScore=0;
+        myScore=0;
     }
     public boolean checkRequiredFields(){
         return Helper.isNotEmptyString(this.getOpponent())

@@ -7,5 +7,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface MatchRepository extends MongoRepository<Match ,String> {
-    public List<Match> findByDateEqualsAndTeamId(LocalDate date,String teamId);
+    public List<Match> findByDateAndTeamId(LocalDate date,String teamId);
+    public List<Match> findByDate(LocalDate date);
 }

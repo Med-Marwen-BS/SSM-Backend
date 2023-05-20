@@ -31,9 +31,9 @@ public class PlayerStatsController {
         return playerService.getAllPlayers();
     }
     @GetMapping("/get/{id}")
-    public PlayerStats getPlayerById(@PathVariable("id") String id) {
+    public List<PlayerStats> getPlayerByMatchId(@PathVariable("id") String id) {
 
-        return playerService.findById(id);
+        return playerService.findByMatchId(id);
     }
 
 }

@@ -13,6 +13,7 @@ import java.time.LocalDate;
 
 @Document(value = "PlayerStats")
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
 public class PlayerStats {
