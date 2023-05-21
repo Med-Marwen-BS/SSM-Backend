@@ -5,7 +5,6 @@ import com.teamservice.teamservice.utility.Helper;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
@@ -53,10 +52,18 @@ public class Match {
                 && this.getTeam()!=null
                 ;
     }
-    public void updateCategory(Match match){
+    public void updateMatch(Match match){
         if(Helper.isNotEmptyString(this.getOpponent())) this.setOpponent(match.getOpponent());
         if(match.getDate() != null) this.setDate(match.getDate());
         if(match.getTime() != null) this.setTime(match.getTime());
+        //if(match.getPlayerStats() != null) this.setPlayerStats(match.getPlayerStats());
+        //if(match.getDate() != null) this.setDate(match.getDate());
+    }
+
+    public void updateScore(Match match){
+
+        this.setMyScore(match.getMyScore());
+        this.setOpponentScore(match.getOpponentScore());
         //if(match.getPlayerStats() != null) this.setPlayerStats(match.getPlayerStats());
         //if(match.getDate() != null) this.setDate(match.getDate());
     }

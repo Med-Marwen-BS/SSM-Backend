@@ -1,14 +1,13 @@
 package com.teamservice.teamservice.services;
 
+import com.teamservice.teamservice.Enum.Status;
 import com.teamservice.teamservice.models.*;
 import com.teamservice.teamservice.models.request.MatchRequest;
-import com.teamservice.teamservice.models.request.UserResponse;
 import com.teamservice.teamservice.models.request.getTokenResponse;
 import com.teamservice.teamservice.repositories.MatchRepository;
 import com.teamservice.teamservice.repositories.PlayerRepository;
 import com.teamservice.teamservice.repositories.PlayerStatsRepository;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -48,7 +47,45 @@ public class MatchService {
         Optional<Match> optionalMatch = matchRepository.findById(match.getId());
         if(optionalMatch.isPresent()){
             Match toUpdate = optionalMatch.get() ;
-            toUpdate.updateCategory(match);
+            toUpdate.updateMatch(match);
+            return matchRepository.save(toUpdate) ;
+        }
+
+        return null ;
+
+    }
+
+    public Match updateScore(Match match)
+    {
+        Optional<Match> optionalMatch = matchRepository.findById(match.getId());
+        if(optionalMatch.isPresent()){
+            Match toUpdate = optionalMatch.get() ;
+            toUpdate.updateScore(match);
+            return matchRepository.save(toUpdate) ;
+        }
+
+        return null ;
+
+    }
+
+    public Match statusLive(String  matchId)
+    {
+        Optional<Match> optionalMatch = matchRepository.findById(matchId);
+        if(optionalMatch.isPresent()){
+            Match toUpdate = optionalMatch.get() ;
+            toUpdate.setStatus(Status.Live);
+            return matchRepository.save(toUpdate) ;
+        }
+
+        return null ;
+
+    }
+    public Match statusFinished(String  matchId)
+    {
+        Optional<Match> optionalMatch = matchRepository.findById(matchId);
+        if(optionalMatch.isPresent()){
+            Match toUpdate = optionalMatch.get() ;
+            toUpdate.setStatus(Status.Finished);
             return matchRepository.save(toUpdate) ;
         }
 

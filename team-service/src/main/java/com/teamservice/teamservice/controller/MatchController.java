@@ -40,4 +40,17 @@ public class MatchController {
         return matchService.findByDate(date,teamId);
     }
 
+    @PutMapping("/updateScore")
+    public Match updateScore(@RequestBody Match match) {
+        return matchService.updateScore(match);
+    }
+    @PutMapping("/updateToLive/{id}")
+    public Match updateToLive(@PathVariable("id") String  match) {
+        return matchService.statusLive(match);
+    }
+    @PutMapping("/updateToFinished/{id}")
+    public Match updateToFinished(@PathVariable("id") String  match) {
+        return matchService.statusFinished(match);
+    }
+
 }

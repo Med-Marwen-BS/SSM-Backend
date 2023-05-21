@@ -1,12 +1,11 @@
 package com.teamservice.teamservice.services;
 
-import com.teamservice.teamservice.models.Player;
 import com.teamservice.teamservice.models.PlayerStats;
 import com.teamservice.teamservice.repositories.PlayerStatsRepository;
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,16 +18,21 @@ public class PlayerStatsService {
         if(!player.checkRequiredFields()) throw new RuntimeException("check required fields failed");
         return playerStatsRepository.save(player) ;
     }
-    public PlayerStats updatePlayer(PlayerStats player)
+    public List<PlayerStats> updatePlayer(List<PlayerStats> psList)
     {
-        Optional<PlayerStats> optionalTeam = playerStatsRepository.findById(player.getId());
-        if(optionalTeam.isPresent()){
-            PlayerStats toUpdate = optionalTeam.get() ;
-            toUpdate.updateCategory(player);
-            return playerStatsRepository.save(toUpdate) ;
-        }
+        List<PlayerStats> toUpdateList = new ArrayList<>();
+        psList.forEach(player -> {
+            Optional<PlayerStats> optionalTeam = playerStatsRepository.findById(player.getId());
+            if(optionalTeam.isPresent()){
+                PlayerStats toUpdate = optionalTeam.get() ;
+                toUpdate.updatePlayerStats(player);
+                toUpdateList.add(toUpdate);
+                //return playerStatsRepository.save(toUpdate) ;
+            }
+        });
 
-        return null ;
+        return playerStatsRepository.saveAll(toUpdateList);
+
 
     }
     public List<PlayerStats> getAllPlayers(){

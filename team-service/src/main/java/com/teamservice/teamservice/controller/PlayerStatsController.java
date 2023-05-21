@@ -22,7 +22,7 @@ public class PlayerStatsController {
         return playerService.addPlayerStats(player);
     }
     @PutMapping("/update")
-    public PlayerStats update(@RequestBody PlayerStats player) {
+    public List<PlayerStats> update(@RequestBody List<PlayerStats> player) {
         return playerService.updatePlayer(player);
     }
 
