@@ -36,4 +36,10 @@ public class PlayerStatsController {
         return playerService.findByMatchId(id);
     }
 
+    @GetMapping("/getByPlayer/{id}")
+    public List<PlayerStats> getByPlayerId(@PathVariable("id") String id) {
+
+        return playerService.findByPlayerId(id);
+    }
+
 }

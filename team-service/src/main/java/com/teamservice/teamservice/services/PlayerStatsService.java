@@ -1,5 +1,6 @@
 package com.teamservice.teamservice.services;
 
+import com.teamservice.teamservice.Enum.Status;
 import com.teamservice.teamservice.models.PlayerStats;
 import com.teamservice.teamservice.repositories.PlayerStatsRepository;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -44,6 +46,14 @@ public class PlayerStatsService {
 
         if(players.isEmpty()) throw new RuntimeException("players not found");
         return players ;
+    }
+
+    public List<PlayerStats> findByPlayerId(String  playerId){
+        List<PlayerStats> players = playerStatsRepository.findByPlayerId(playerId);
+
+
+        if(players.isEmpty()) throw new RuntimeException("players not found");
+        return players.stream().filter(playerStats -> playerStats.getMatch().getStatus().equals(Status.Finished)).collect(Collectors.toList());
     }
 
 }
