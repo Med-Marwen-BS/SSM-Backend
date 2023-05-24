@@ -48,4 +48,9 @@ public class PlayerService {
         return player.get() ;
     }
 
+    public String delete(String playerId){
+        playerRepository.deleteById(playerId);
+        return "success";
+    }
+
 }

@@ -79,5 +79,10 @@ public class TeamService {
         return team.get() ;
     }
 
+    public String delete(String teamId){
+        teamRepository.deleteById(teamId);
+        return "success";
+    }
+
 
 }

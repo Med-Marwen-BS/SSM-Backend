@@ -54,4 +54,9 @@ public class CategoryService {
         return category.get() ;
     }
 
+    public String delete(String categoryId){
+        categoryRepository.deleteById(categoryId);
+        return "success";
+    }
+
 }

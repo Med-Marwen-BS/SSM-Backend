@@ -35,4 +35,10 @@ public class TeamController {
         return teamService.findById(id);
     }
 
+    @DeleteMapping("/delete/{teamId}")
+    public String delete(@PathVariable("teamId") String teamId){
+        teamService.delete(teamId);
+        return "success";
+    }
+
 }

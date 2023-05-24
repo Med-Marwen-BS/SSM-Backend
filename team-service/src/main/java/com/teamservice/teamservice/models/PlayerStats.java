@@ -16,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.DocumentReference;
 public class PlayerStats {
     @Id
     private String id ;
-    @DocumentReference(lazy = true)
+    @DocumentReference(lazy = false)
     private Player player ;
     private Integer shots ;
     private Integer goals ;
@@ -24,6 +24,8 @@ public class PlayerStats {
     private Integer minutes ;
     @DocumentReference
     private Match match ;
+    @DocumentReference
+    private Category category ;
 //    private LocalDate date ;
 //    private String opponent ;
 
@@ -31,6 +33,7 @@ public class PlayerStats {
     public PlayerStats(Match match,Player player){
         this.match=match;
         this.player=player;
+        this.category=player.getCategory();
         shots=0;
         goals=0;
         saves=0;
