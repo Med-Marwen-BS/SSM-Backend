@@ -37,6 +37,8 @@ public class User implements UserDetails {
     private String password;
 
     private Role role;
+    private boolean adminCategory;
+    private String categoryId ;
     @DocumentReference(lazy = true)
     private Team team ;
 

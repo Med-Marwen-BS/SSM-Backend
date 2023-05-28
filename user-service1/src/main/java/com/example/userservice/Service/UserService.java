@@ -8,6 +8,7 @@ import com.example.userservice.Entity.Param.CsvResult;
 import com.example.userservice.Entity.Param.MailBodyParam;
 import com.example.userservice.Entity.Param.MailParam;
 import com.example.userservice.Entity.User;
+import com.example.userservice.Enum.Role;
 import com.example.userservice.Repo.TeamRepository;
 import com.example.userservice.Repo.UserRepo;
 import com.example.userservice.Utility.CsvHelper;
@@ -136,10 +137,25 @@ public class UserService {
     }
     public String leaveTeam(String token){
         try {
-            this.getUserByToken(token);
-
 
             User user=this.getUserByToken(token);
+            if(user.getTeam().getCreatorId().equals(user.getId()))
+                throw new RuntimeException("creator cannot leave the team");
+            user.setTeam(null);
+            userRepo.save(user);
+            return "success";
+        }catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        }
+
+
+    }
+
+    public String deleteUserFromTeam(String id){
+        try {
+
+            User user=userRepo.findById(id).orElseThrow();
             if(user.getTeam().getCreatorId().equals(user.getId()))
                 throw new RuntimeException("creator cannot leave the team");
             user.setTeam(null);
@@ -232,5 +248,40 @@ public class UserService {
         }
         userRepo.saveAll(usersToSave);
         return csvResult;
+    }
+
+    public List<User> getUsers(String token){
+        User u = userRepo.findByUsername(jwtService.extractUsername(token)).orElseThrow();
+        if(u.getRole().equals(Role.SUPER_ADMIN))
+            return userRepo.findAll().stream().filter(user -> !user.getRole().equals(Role.SUPER_ADMIN)).toList();
+        else if(u.getRole().equals(Role.ADMIN))
+            return userRepo.findAll().stream().filter(user -> !user.getRole().equals(Role.SUPER_ADMIN)).toList();
+        else throw new RuntimeException("permission denied");
+    }
+
+    public List<User> getUsersByTeam(String teamId){
+
+        return userRepo.findByTeamId(teamId).stream().filter(user -> !user.getRole().equals(Role.SUPER_ADMIN)).toList();
+    }
+
+    public User changeRole(String username,Role role){
+
+        User toUpdate = userRepo.findByUsername(username).orElseThrow();
+        toUpdate.setRole(role);
+        return userRepo.save(toUpdate);
+    }
+
+    public User changeCategoryRole(String id,boolean adminCategory,String categoryId){
+
+        User toUpdate = userRepo.findById(id).orElseThrow();
+        if(adminCategory){
+            toUpdate.setAdminCategory(true);
+            toUpdate.setCategoryId(categoryId);
+        }else{
+            toUpdate.setAdminCategory(false);
+            toUpdate.setCategoryId(null);
+        }
+
+        return userRepo.save(toUpdate);
     }
 }

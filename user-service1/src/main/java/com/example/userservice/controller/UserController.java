@@ -5,6 +5,7 @@ import com.example.userservice.Entity.Param.CsvResult;
 import com.example.userservice.Entity.Param.MailBodyParam;
 import com.example.userservice.Entity.Param.TeamToUserBody;
 import com.example.userservice.Entity.User;
+import com.example.userservice.Enum.Role;
 import com.example.userservice.Response.CommonResponse;
 import com.example.userservice.Response.ErrorResponse;
 import com.example.userservice.Response.MainResponse;
@@ -14,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -132,6 +135,14 @@ public class UserController {
             return new CommonResponse<>("failed",HttpStatus.BAD_REQUEST.toString());
         }
     }
+    @GetMapping("/deleteUserFromTeam/{id}")
+    public MainResponse deleteUserFromTeam(@PathVariable("id") String id){
+        try {
+            return new CommonResponse<>(userService.deleteUserFromTeam(id),HttpStatus.OK.toString());
+        }catch (Exception e){
+            return new CommonResponse<>("failed",HttpStatus.BAD_REQUEST.toString());
+        }
+    }
 
     @PutMapping("/readNotification/{id}")
     public MainResponse readNotification(@PathVariable String id){
@@ -144,6 +155,43 @@ public class UserController {
     public MainResponse validatePassword(@PathVariable String id,@PathVariable String password){
         try{
             return new CommonResponse<>(userService.validatePassword(id,password),HttpStatus.OK.toString());
+        }
+        catch (RuntimeException exception){
+            return new ErrorResponse(exception.getMessage());
+        }
+    }
+    @GetMapping("/getAllUsers")
+    public MainResponse getUsers(@RequestHeader("Authorization") String token){
+        try{
+            return new CommonResponse<>(userService.getUsers(token.replace("Bearer ","")),HttpStatus.OK.toString());
+        }
+        catch (RuntimeException exception){
+            return new ErrorResponse(exception.getMessage());
+        }
+    }
+    @GetMapping("/getUsersByTeam/{teamId}")
+    public MainResponse getUsersByTeam(@PathVariable("teamId") String teamId){
+        try{
+            return new CommonResponse<>(userService.getUsersByTeam(teamId),HttpStatus.OK.toString());
+        }
+        catch (RuntimeException exception){
+            return new ErrorResponse(exception.getMessage());
+        }
+    }
+    @PostMapping("/changeRole")
+    public MainResponse changeRole(@RequestParam("username") String username,@RequestParam("role") Role role){
+        try{
+            return new CommonResponse<>(userService.changeRole(username,role),HttpStatus.OK.toString());
+        }
+        catch (RuntimeException exception){
+            return new ErrorResponse(exception.getMessage());
+        }
+    }
+    @PostMapping("/changeCategoryRole")
+    public MainResponse changeRole(@RequestParam("id") String id,@RequestParam("adminCategory") boolean adminCategory
+            ,@RequestParam("categoryId") String categoryId){
+        try{
+            return new CommonResponse<>(userService.changeCategoryRole(id,adminCategory,categoryId),HttpStatus.OK.toString());
         }
         catch (RuntimeException exception){
             return new ErrorResponse(exception.getMessage());

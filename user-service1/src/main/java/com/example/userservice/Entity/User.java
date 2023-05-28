@@ -38,7 +38,8 @@ public class User implements UserDetails {
     private String password;
 
     private Role role;
-
+    private boolean adminCategory;
+    private String categoryId ;
     private Sexe sexe;
     @DocumentReference
     private Team team ;

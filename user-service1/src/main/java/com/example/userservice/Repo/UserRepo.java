@@ -19,4 +19,6 @@ public interface UserRepo extends MongoRepository<User,String> {
     List<User> findByEmailIn(List<String> emailList);
     List<User> findByUsernameIn(List<String> usernameList);
 
+    List<User> findByTeamId(String teamId);
+
 }
