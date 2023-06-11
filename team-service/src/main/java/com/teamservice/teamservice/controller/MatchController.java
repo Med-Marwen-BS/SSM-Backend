@@ -45,8 +45,8 @@ public class MatchController {
         return matchService.updateScore(match);
     }
     @PutMapping("/updateToLive/{id}")
-    public Match updateToLive(@PathVariable("id") String  match) {
-        return matchService.statusLive(match);
+    public Match updateToLive(@RequestHeader("Authorization") String token,@PathVariable("id") String  match) {
+        return matchService.statusLive(token,match);
     }
     @PutMapping("/updateToFinished/{id}")
     public Match updateToFinished(@PathVariable("id") String  match) {

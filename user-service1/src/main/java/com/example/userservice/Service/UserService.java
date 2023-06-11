@@ -1,14 +1,16 @@
 package com.example.userservice.Service;
 
+import com.example.userservice.Entity.Notification;
 import com.example.userservice.Entity.Team;
 import com.example.userservice.Enum.CsvStatus;
-import com.example.userservice.Entity.Notification;
 import com.example.userservice.Entity.Param.CsvConversionResult;
 import com.example.userservice.Entity.Param.CsvResult;
 import com.example.userservice.Entity.Param.MailBodyParam;
 import com.example.userservice.Entity.Param.MailParam;
 import com.example.userservice.Entity.User;
+import com.example.userservice.Enum.NotificationStatus;
 import com.example.userservice.Enum.Role;
+import com.example.userservice.Repo.NotificationRepository;
 import com.example.userservice.Repo.TeamRepository;
 import com.example.userservice.Repo.UserRepo;
 import com.example.userservice.Utility.CsvHelper;
@@ -19,7 +21,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,7 @@ public class UserService {
 
     private final MailService mailService;
     private final JWTService jwtService;
+    private final NotificationRepository notificationRepo;
 
     private final MongoTemplate mongoTemplate;
 
@@ -71,6 +73,12 @@ public class UserService {
             if(user.getTeam()!=null) throw new RuntimeException("user have team");
             user.setTeam(optionalTeam.get());
             userRepo.save(user);
+            Notification notification = Notification.builder()
+                    .message("You have been added to a new Team : "+optionalTeam.get().getName())
+                    .userId(user.getId())
+                    .status(NotificationStatus.DELIVERED)
+                    .build();
+            notificationRepo.save(notification);
             return "success";
         }catch (Exception e){
             e.printStackTrace();
@@ -91,13 +99,6 @@ public class UserService {
         original.setUsername(user.getUsername() != null ? user.getUsername() : original.getUsername());
         original.setSexe(user.getSexe() != null ? user.getSexe() : original.getSexe());
         return userRepo.save(original);
-    }
-
-    public void updateNotification(Notification notification){
-        Query query = new Query();
-        Update update = new Update();
-        update.set("notification",notification);
-        mongoTemplate.updateMulti(query,update,User.class);
     }
 
     public void readNotification(String id){
@@ -142,6 +143,8 @@ public class UserService {
             if(user.getTeam().getCreatorId().equals(user.getId()))
                 throw new RuntimeException("creator cannot leave the team");
             user.setTeam(null);
+            user.setCategoryId(null);
+            user.setAdminCategory(false);
             userRepo.save(user);
             return "success";
         }catch (Exception e){

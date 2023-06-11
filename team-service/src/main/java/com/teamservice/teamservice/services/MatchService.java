@@ -1,12 +1,11 @@
 package com.teamservice.teamservice.services;
 
+import com.teamservice.teamservice.Enum.NotificationStatus;
 import com.teamservice.teamservice.Enum.Status;
 import com.teamservice.teamservice.models.*;
 import com.teamservice.teamservice.models.request.MatchRequest;
 import com.teamservice.teamservice.models.request.getTokenResponse;
-import com.teamservice.teamservice.repositories.MatchRepository;
-import com.teamservice.teamservice.repositories.PlayerRepository;
-import com.teamservice.teamservice.repositories.PlayerStatsRepository;
+import com.teamservice.teamservice.repositories.*;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +21,8 @@ public class MatchService {
     private APIClients apiClients;
     private PlayerStatsRepository playerStatsRepository;
     private PlayerRepository playerRepository;
+    private NotificationRepository notificationRepository;
+    private UserRepo userRepo;
 
     public Match addMatch(MatchRequest matchRequest, String token){
 
@@ -68,12 +69,28 @@ public class MatchService {
 
     }
 
-    public Match statusLive(String  matchId)
+    public Match statusLive(String token ,String  matchId)
     {
+        getTokenResponse userResponse = apiClients.getByToken(token);
+
         Optional<Match> optionalMatch = matchRepository.findById(matchId);
         if(optionalMatch.isPresent()){
+
+
             Match toUpdate = optionalMatch.get() ;
             toUpdate.setStatus(Status.Live);
+            List<User> users = userRepo.findByTeamId(toUpdate.getTeam().getId()).orElseThrow();
+            users.forEach(user -> {
+                if(!user.getId().equals(userResponse.getData().getId())){
+                    Notification notification = Notification.builder()
+                            .message(toUpdate.getTeam().getName()+" vs "+toUpdate.getOpponent() +" : "+"start now")
+                            .userId(user.getId())
+                            .status(NotificationStatus.DELIVERED)
+                            .build();
+                    notificationRepository.save(notification);
+
+                }
+            });
             return matchRepository.save(toUpdate) ;
         }
 

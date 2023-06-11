@@ -1,6 +1,5 @@
 package com.example.userservice.controller;
 
-import com.example.userservice.Entity.Notification;
 import com.example.userservice.Entity.Param.CsvResult;
 import com.example.userservice.Entity.Param.MailBodyParam;
 import com.example.userservice.Entity.Param.TeamToUserBody;
@@ -15,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -115,11 +112,11 @@ public class UserController {
         }
     }
 
-    @PostMapping("/notification")
-    public MainResponse updateNotification(@RequestBody Notification notification){
-        userService.updateNotification(notification);
-        return new CommonResponse<>(true,HttpStatus.OK.toString());
-    }
+//    @PostMapping("/notification")
+//    public MainResponse updateNotification(@RequestBody Notification notification){
+//        userService.updateNotification(notification);
+//        return new CommonResponse<>(true,HttpStatus.OK.toString());
+//    }
 
     @PostMapping("/addTeamToUser")
     public MainResponse addTeamToUser(@RequestBody TeamToUserBody teamToUserBody){
