@@ -4,6 +4,9 @@ package com.example.userservice.Service;
 import com.example.userservice.Entity.Param.MailParam;
 import com.example.userservice.Entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,7 +20,11 @@ public class MailService {
 
     public void sendEmail(MailParam mailParam) {
         try{
-            this.restTemplate.postForObject(mailServiceUrl, mailParam, Boolean.class);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<Object> requestEntity = new HttpEntity<>(mailParam, headers);
+
+            this.restTemplate.postForObject(mailServiceUrl, requestEntity, Boolean.class);
         }
         catch (Exception exception){
             exception.printStackTrace();

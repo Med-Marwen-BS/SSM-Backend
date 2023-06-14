@@ -189,8 +189,8 @@ public class UserService {
 
         MailParam mailParam = MailParam.builder()
                 .type("SUPPORT")
-                .fullName("S.O.S Support Team")
-                .email("sproject.technical@gmail.com")
+                .fullName("SSM Support Team")
+                .email("ssm2023.noreply@gmail.com")
                 .message(mailBodyParam.getMessage())
                 .username(user.getUsername())
                 .sexe(user.getSexe().name())

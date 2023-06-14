@@ -4,16 +4,17 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-<p>Bonjour Equipe Support : </p>
+<p>Hello, Support Team : </p>
 
-<p th:if="${sexe == 'homme'}" th:text="'Mr '+${senderName}+' vous a evoyé ce message :'"></p>
-<p th:if="${sexe == 'femme'}" th:text="'Mme '+${senderName}+' vous a evoyé ce message :'"></p>
+<!--<p th:if="${sexe == 'homme'}" th:text="'Mr '+${senderName}+' vous a evoyé ce message :'"></p>-->
+<!--<p th:if="${sexe == 'femme'}" th:text="'Mme '+${senderName}+' vous a evoyé ce message :'"></p>-->
+<p th:text="'Mr./Ms'+' '+${recipientName}+','"></p>
 <p th:text="${message}"></p>
 
 
 
 
-<p>Cordialement,</p>
+<p>Best regards,</p>
 <p>
   <em th:text="${senderName}"></em> <br />
 

@@ -29,13 +29,13 @@ public class MailService {
         Map<String, Object> templateModel = new HashMap<>();
         templateModel.put("recipientName", param.getFullName());
         templateModel.put("username", param.getUsername());
-        templateModel.put("senderName", "S.O.S Support");
+        templateModel.put("senderName", "SSM Support");
         templateModel.put("sexe", param.getSexe().toLowerCase());
         templateModel.put("message",environment.getProperty(param.getType()));
         if(param.getResetPass() != null){
             templateModel.put("password",param.getResetPass());
         }
-        MailBodyImpl mailNotification = new MailBodyImpl("S.O.S_Support", recivers, MailPriority.HIGH, true, param.getType().replace("_"," "), "template-thymeleaf", templateModel);
+        MailBodyImpl mailNotification = new MailBodyImpl("SSM_Support", recivers, MailPriority.HIGH, true, param.getType().replace("_"," "), "template-thymeleaf", templateModel);
 
         try {
             mailNotificationEngine.processNotification(mailNotification);

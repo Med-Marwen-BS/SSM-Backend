@@ -4,8 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   </head>
   <body>
-    <p th:if="${sexe == 'homme'}" th:text="'Bonjour Mr'+' '+${recipientName}+','"></p>
-    <p th:if="${sexe == 'femme'}" th:text="'Bonjour Mme'+' '+${recipientName}+','"></p>
+<!--    <p th:if="${sexe == 'homme'}" th:text="'Bonjour Mr'+' '+${recipientName}+','"></p>-->
+<!--    <p th:if="${sexe == 'femme'}" th:text="'Bonjour Mme'+' '+${recipientName}+','"></p>-->
+    <p th:text="'Hello, Mr./Ms'+' '+${recipientName}+','"></p>
 
     <div th:if="${password == null}">
       <p th:text="${message}"></p>
@@ -17,7 +18,7 @@
       <p th:text="${password}" style="font-weight: bold"></p>
     </div>
 
-    <p>Cordialement,</p>
+    <p>Best regards,</p>
     <p>
       <em th:text="${senderName}"></em> <br />
 

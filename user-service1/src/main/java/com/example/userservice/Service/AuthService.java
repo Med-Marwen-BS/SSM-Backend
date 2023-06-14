@@ -86,14 +86,15 @@ public class AuthService {
             User user = userRepo.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User is not found on the database"));
             String randomPass = UUID.randomUUID().toString();
             user.setPassword(passwordEncoder.encode(randomPass));
+//            String sexe = user.getSexe().name().isEmpty()&& user.getSexe().name().isBlank()?"HOMME":user.getSexe().name();
             userRepo.save(user);
             MailParam mailParam = MailParam.builder()
                     .fullName(user.getLastName()+" "+user.getFirstName())
                     .username(user.getUsername())
                     .email(user.getEmail())
-                    .sexe(user.getSexe().name())
+                    .sexe("homme")
                     .resetPass(randomPass)
-                    .type("Mot_De_Passe_Oublié")
+                    .type("Forgot_Password")
                     .build();
             mailService.sendEmail(mailParam);
             return true;
@@ -101,7 +102,7 @@ public class AuthService {
         catch (Exception exception){
             exception.printStackTrace();
             System.out.println(exception.getMessage());
-            return false;
+            throw exception;
         }
     }
 }

@@ -7,7 +7,7 @@ spring:
   application:
     name : MAIL-SERVICE
   mail:
-    username: sproject.technical
+    username: ssm2023.noreply
     port: '587'
     properties:
       mail:
@@ -20,7 +20,8 @@ spring:
     default-encoding: UTF-8
     host: smtp.gmail.com
     test-connection: 'false'
-    password: ybwxayuw--euqvswcn
+#    password: ybwxayuw--euqvswcn
+    password: xhnnoqluhdliqhej
   thymeleaf:
     cache: 'false'
     suffix: .html
