@@ -11,7 +11,7 @@ node {
    withCredentials([usernamePassword(credentialsId: '829fc465-47c0-4903-a6b0-436f2ad50cdb', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
        dir('service-registry') {
            bat 'docker build -t marwen95/ssm-service-registry:latest .'
-           bat 'docker login -u $USERNAME -p $PASSWORD'
+           bat 'docker login -u marwen95 -p maratanna1920'
            bat 'docker push marwen95/ssm-service-registry:latest'
        }
 
@@ -25,7 +25,7 @@ node {
    withCredentials([usernamePassword(credentialsId: '829fc465-47c0-4903-a6b0-436f2ad50cdb', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
        dir('config-server') {
            bat 'docker build -t marwen95/ssm-config-server:latest .'
-           bat 'docker login -u $USERNAME -p $PASSWORD'
+           bat 'docker login -u marwen95 -p maratanna1920'
            bat 'docker push marwen95/ssm-config-server:latest'
        }
       }
@@ -36,7 +36,7 @@ node {
    withCredentials([usernamePassword(credentialsId: '829fc465-47c0-4903-a6b0-436f2ad50cdb', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
        dir('api-gateway') {
            bat 'docker build -t marwen95/ssm-api-gateway:latest .'
-           bat 'docker login -u $USERNAME -p $PASSWORD'
+           bat 'docker login -u marwen95 -p maratanna1920'
            bat 'docker push marwen95/ssm-api-gateway:latest'
        }
       }
@@ -47,7 +47,7 @@ node {
    withCredentials([usernamePassword(credentialsId: '829fc465-47c0-4903-a6b0-436f2ad50cdb', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
        dir('Mail-App') {
            bat 'docker build -t marwen95/ssm-mail-service:latest .'
-           bat 'docker login -u $USERNAME -p $PASSWORD'
+           bat 'docker login -u marwen95 -p maratanna1920'
            bat 'docker push marwen95/ssm-mail-service:latest'
        }
       }
@@ -58,7 +58,7 @@ node {
    withCredentials([usernamePassword(credentialsId: '829fc465-47c0-4903-a6b0-436f2ad50cdb', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
        dir('team-service') {
            bat 'docker build -t marwen95/ssm-team-service:latest .'
-           bat 'docker login -u $USERNAME -p $PASSWORD'
+           bat 'docker login -u marwen95 -p maratanna1920'
            bat 'docker push marwen95/ssm-team-service:latest'
        }
       }
